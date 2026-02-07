@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ add this
-// import Card if you want to reuse Card component
+import { useNavigate } from "react-router-dom";
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState([]);
-  const navigate = useNavigate(); // ✅ define navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // localStorage se wishlist fetch karna
     const savedWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
     setWishlist(savedWishlist);
   }, []);
@@ -22,7 +20,7 @@ const Wishlist = () => {
     <div className="wishlist">
       <h2 className="text-xl font-semibold mb-4">My Wishlist</h2>
       {wishlist.length === 0 ? (
-        <p className="text-5xl text-center">No books in your wishlist.</p>
+        <p className="text-2xl text-center">No books in your wishlist.</p>
       ) : (
         <ul className="flex flex-wrap justify-center gap-10">
           {wishlist.map((book) => (
@@ -35,19 +33,17 @@ const Wishlist = () => {
                 alt={book.title}
                 className="w-full h-[250px] object-cover"
               />
-              <div className="h-[50%] flex flex-col items-center gap-1 p-2">
+              <div className="flex flex-col items-center gap-2 p-2 flex-auto">
                 <h3 className="text-xl font-bold text-center">{book.title}</h3>
-                
                 <button
                   onClick={() => {
-                    const workId = book.key.split("/").pop(); // OL455305W
+                    const workId = book.key.split("/").pop();
                     navigate(`/book/works/${workId}`);
                   }}
                   className="text-blue-500 font-bold underline cursor-pointer hover:text-blue-700"
                 >
                   More Info
                 </button>
-
                 <button
                   onClick={() => removeFromWishlist(book.key)}
                   className="text-red-600 font-bold text-xl cursor-pointer underline"

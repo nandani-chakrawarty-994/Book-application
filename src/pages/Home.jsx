@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Hero from "./Hero";
 import Card from "../components/Card";
+import Hero from "./Hero";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -12,6 +12,7 @@ const Home = () => {
       const res = await axios.get(
         `https://openlibrary.org/search.json?q=${searchQuery || "latest"}`
       );
+
       const simplifiedBooks = res.data.docs.slice(0, 10).map((book) => ({
         key: book.key,
         title: book.title,
@@ -20,6 +21,7 @@ const Home = () => {
           ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
           : "https://via.placeholder.com/150",
       }));
+
       setBooks(simplifiedBooks);
     } catch (error) {
       console.error("Error fetching books:", error);
@@ -37,10 +39,8 @@ const Home = () => {
 
   return (
     <>
-      <Hero/>
+      <Hero />
       <div className="homeSection">
-    
-        {/* Search bar */}
         <form onSubmit={handleSearch} className="form">
           <input
             type="text"
@@ -49,23 +49,16 @@ const Home = () => {
             onChange={(e) => setQuery(e.target.value)}
             className="input"
           />
-          <button
-            type="submit"
-            className="btn"
-          >
+          <button type="submit" className="btn">
             Search
           </button>
         </form>
-      
 
-        <div>
-        {/* Books list */}
         <ul className="flex flex-wrap justify-center gap-10">
           {books.map((book) => (
             <Card key={book.key} book={book} />
           ))}
         </ul>
-        </div>
       </div>
     </>
   );

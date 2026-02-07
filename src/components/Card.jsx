@@ -5,7 +5,7 @@ const Card = ({ book }) => {
 
   const addToWishlist = () => {
     const existingWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const isAlreadyAdded = existingWishlist.some((b) => b.id === book.id);
+    const isAlreadyAdded = existingWishlist.some((b) => b.key === book.key); // ✅ correct
     if (!isAlreadyAdded) {
       existingWishlist.push(book);
       localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
@@ -22,20 +22,20 @@ const Card = ({ book }) => {
         alt={book.title}
         className="w-full h-[250px] object-cover"
       />
-      <div className="h-[50%] flex flex-col items-center gap-1 p-2">
+      <div className="flex flex-col items-center gap-2 p-2 flex-auto">
         <h3 className="text-xl font-bold text-center">{book.title}</h3>
         <button
-            onClick={() => {
-              const workId = book.key.split("/").pop(); // OL455305W
-              navigate(`/book/works/${workId}`);
-            }}
-            className="text-blue-500 font-bold underline cursor-pointer hover:text-blue-700"
-          >
-            More Info
+          onClick={() => {
+            const workId = book.key.split("/").pop(); // OL455305W
+            navigate(`/book/works/${workId}`);
+          }}
+          className="text-blue-500 font-bold underline cursor-pointer hover:text-blue-700"
+        >
+          More Info
         </button>
-        <button onClick={addToWishlist} className="btn w-fit">
+        <button onClick={addToWishlist} className="btn w-fit px-4 py-2">
           Add to Wishlist
-        </button>        
+        </button>
       </div>
     </li>
   );
