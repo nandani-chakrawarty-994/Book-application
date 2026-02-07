@@ -37,36 +37,36 @@ const Home = () => {
 
   return (
     <>
-    <Hero/>
-    <div className="homeSection">
-  
-      {/* Search bar */}
-      <form onSubmit={handleSearch} className="form">
-        <input
-          type="text"
-          placeholder="Enter book name or author"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="input"
-        />
-        <button
-          type="submit"
-          className="btn"
-        >
-          Search
-        </button>
-      </form>
+      <Hero/>
+      <div className="homeSection">
     
+        {/* Search bar */}
+        <form onSubmit={handleSearch} className="form">
+          <input
+            type="text"
+            placeholder="Enter book name or author"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="input"
+          />
+          <button
+            type="submit"
+            className="btn"
+          >
+            Search
+          </button>
+        </form>
+      
 
-      <div>
-      {/* Books list */}
-      <ul className="flex flex-wrap justify-center gap-10">
-        {books.map((book) => (
-          <Card key={book.key} book={book} />
-        ))}
-      </ul>
+        <div>
+        {/* Books list */}
+        <ul className="flex flex-wrap justify-center gap-10">
+          {books.map((book) => (
+            <Card key={book.key} book={book} />
+          ))}
+        </ul>
+        </div>
       </div>
-    </div>
     </>
   );
 };

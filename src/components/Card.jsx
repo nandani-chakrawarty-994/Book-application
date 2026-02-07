@@ -5,10 +5,10 @@ const Card = ({ book }) => {
 
   const addToWishlist = () => {
     const existingWishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-    const isAlreadyAdded = existingWishlist.some((b) => b.key === book.key);
+    const isAlreadyAdded = existingWishlist.some((b) => b.id === book.id);
     if (!isAlreadyAdded) {
-      const updatedWishlist = [...existingWishlist, book];
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      existingWishlist.push(book);
+      localStorage.setItem("wishlist", JSON.stringify(existingWishlist));
       alert(`${book.title} added to wishlist!`);
     } else {
       alert(`${book.title} is already in wishlist!`);
@@ -16,28 +16,26 @@ const Card = ({ book }) => {
   };
 
   return (
-    <li className="border w-70 h-100 flex flex-col pb-10 gap-2 shadow-lg rounded-lg overflow-hidden">
+    <li className="card w-60 h-auto flex flex-col pb-10 gap-5 shadow-lg overflow-hidden">
       <img
         src={book.cover}
         alt={book.title}
-        className="w-full h-[50%] object-cover"
+        className="w-full h-[250px] object-cover"
       />
-      <div className="h-[50%] flex flex-col justify-around p-2">
-        <h3 className="text-2xl text-center font-semibold">{book.title}</h3>
-        <div className="flex justify-around">
-          <button
-            onClick={addToWishlist}
-            className="btn"
-          >
-            Add to Wishlist
-          </button>
-          <button
-            onClick={() => navigate(`/book/${book.key}`)}
+      <div className="h-[50%] flex flex-col items-center gap-1 p-2">
+        <h3 className="text-xl font-bold text-center">{book.title}</h3>
+        <button
+            onClick={() => {
+              const workId = book.key.split("/").pop(); // OL455305W
+              navigate(`/book/works/${workId}`);
+            }}
             className="text-blue-500 font-bold underline cursor-pointer hover:text-blue-700"
           >
             More Info
-          </button>
-        </div>
+        </button>
+        <button onClick={addToWishlist} className="btn w-fit">
+          Add to Wishlist
+        </button>        
       </div>
     </li>
   );
